@@ -1,12 +1,12 @@
 # HongWeiHao
 
 0. 
-> //一個的軟件的價值不在於它有多厲害，他有多複雜，他花了多少經費，而是有多少人使用  
-<code>int* arr_rever(int* arr, int len);  </code>
+> 一個的軟件的價值不在於它有多厲害，他有多複雜，他花了多少經費  
+<code>而是有多少人使用  </code>
   
 0. 
->// 創建動態陣列\[回傳陣列地址\](陣列長度)  
-<code>int* arr_creat(int len);  </code>
+>  
+<code>  </code>
   
   
 ---
