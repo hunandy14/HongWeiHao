@@ -9,9 +9,9 @@
 <code>  </code>
   
   
-<font color="blue">文字顏色為藍色</font>
-<font color="white">要反白的文字<font>
-
+<font color="blue">文字顏色為藍色</font>  
+<font color="white">要反白的文字<font>  
+  
 ---
 
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<font color="blue">By:Charlotte.HoinG <code>未来の自分になっておく</code></font>
