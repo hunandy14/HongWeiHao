@@ -10,6 +10,7 @@
   
   
 <font color="blue">文字顏色為藍色</font>
+<font color="white">要反白的文字<font>
 
 ---
 
