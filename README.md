@@ -4,4 +4,4 @@
 
 
 ---
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　By:Charlotte.HoinG >未来の自分になっておく
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　By:Charlotte.HoinG <code>未来の自分になっておく</code>
