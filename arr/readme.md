@@ -19,7 +19,7 @@ API 說明
 <code>void arr_rmove(int* arr, int len);  </code>
 
 0.  
->// 向右移動一格[捨去](陣列地址,長度)  
+>// 向右移動一格\[捨去\](陣列地址,長度)  
 <code>void arr_rmove2(int* arr, int len);</code>
 
 0.  
