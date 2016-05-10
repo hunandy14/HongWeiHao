@@ -2,25 +2,24 @@
 #include <stdlib.h>
 #include "fun.c"
 /*===========================================*/
-/*===========================================*/
 int main(int argc, char const *argv[]){
-	int arr[] = {1, 2, 3, 4, 5};
-	int len = sizeof(arr) / sizeof(arr[0]);
-    /*--------API »¡©ú--------*/
-    
-    /* Â½Âà */
-    int *arr2=arr_rever(arr, len);
-    // free(arr2); //°O±o§â¦¹¦æ©ñ¨ì³Ì«á[return 0;«e]
-    
-    /* ¦C¦L */
-    arr_print(arr2,len);
-
-    /* ¥k²¾ */
-    int *temp=arr_creat(len+1);// ³y¤@­Ó¤j©ó1ªº¼È¦s
-    arr_copy(arr, temp, len);// ½Æ»s¼Æ­È¶i¥h
-    arr_rmove(temp, len);// ¦V¥k²¾°Ê¤@®æ
-    arr_print(temp, len+1);
+    int arr1[] = {0,1,2,3,4,5,0,0,0,0};
+    int arr2[]  =  {0,1,2,3,4,5,6,7,8,9};
+    int len = sizeof(arr1) / sizeof(arr1[0]);
     /*--------*******--------*/
-	return 0;
+    /* ç¿»è½‰ */
+    int *arr1_r=arr_rever(arr1, len);
+    /* å°å‡º */
+    arr_print(arr1_r,len);
+    /* è¤‡è£½æ–°é™£åˆ— */
+    int *temp = arr_creat(len);
+    arr_copy(arr1_r, temp, len);
+    /* å›å‚³ä¹˜ç©å’Œ */
+    int total=arr_rtotal(arr1,arr2,len);
+    printf("total=%d\n", total);
+    /*--------*******--------*/
+    free(arr1_r);
+    free(temp);
+    return 0;
 }
 /*===========================================*/

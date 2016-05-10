@@ -32,9 +32,33 @@ void arr_rmove(int* arr, int len){
 	}arr[0]=0;
 }
 
+void arr_rmove2(int* arr, int len){
+	// arr[len]=arr[len-1];
+	for (int i = len-1; i > 0; --i){
+		arr[i]=arr[i-1];
+	}arr[0]=0;
+}
+
 void arr_copy(int* arr1, int* arr2, int len){
 	for (int i = 0; i < len; ++i){
 		arr2[i]=arr1[i];
 	}
+}
+
+int arr_mult2add(int* arr1, int* arr2, int len){
+    int temp=0;
+    for (int i = 0; i < len; ++i){
+        temp += arr1[i]*arr2[i];
+    }
+    return temp;
+}
+
+int arr_rtotal(int* arr1, int* arr2 ,int len){
+	int total=0;
+	for(int i=0; i<len; i++){
+	    total+=arr_mult2add(arr1, arr2, len);
+	    arr_rmove2(arr1, len);
+    }
+    return total;
 }
 /*===========================================*/
