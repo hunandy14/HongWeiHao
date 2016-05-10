@@ -10,4 +10,4 @@
   
   
 ---
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　By:Charlotte.HoinG <code>未来の自分になっておく</code>
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　> By:Charlotte.HoinG <code>未来の自分になっておく</code>
