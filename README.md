@@ -4,4 +4,4 @@
 
 
 
-<h6 style="text-align:right"> By:Charlotte.HoinG #未来の自分になっておく <h1>
+<h6 style="text-align:right"> By:Charlotte.HoinG #未来の自分になっておく <h6>
