@@ -20,6 +20,9 @@ void arr_copy(int* arr1, int* arr2, int len);
 // 乘積的總和(陣列地址,陣列地址,陣列長度)
 int arr_mult2add(int* arr1, int* arr2, int len);
 
-// 右移的成績總和(陣列地址,陣列地址,陣列長度)
-int arr_rtotal(int* arr1, int* arr2 ,int len);
+// 右移的成績總和(陣列地址,陣列地址,陣列長度,是否列印)
+int arr_rtotal(int* arr1, int* arr2 ,int len ,int flag);
+
+// 右移的成績總和[預設不列印](陣列地址,陣列地址,陣列長度)
+int arr_rtotal(int* arr1, int* arr2 , int len);
 /*==============================================*/

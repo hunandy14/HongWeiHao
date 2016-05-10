@@ -19,7 +19,7 @@ API 說明
 <code>void arr_rmove(int* arr, int len);  </code>
 
 0.  
->// 向右移動一格\[捨去\](陣列地址,長度)  
+>// 向右移動一格[捨去](陣列地址,長度)  
 <code>void arr_rmove2(int* arr, int len);</code>
 
 0.  
@@ -28,8 +28,12 @@ API 說明
 
 0.  
 >// 乘積的總和(陣列地址,陣列地址,陣列長度)  
-<code>int arr_mult2add(int* arr1, int* arr2, int len);</code>
+<code>int arr_mult2add(int* arr1, int* arr2, int len);  </code>
 
 0.  
->// 右移的成績總和(陣列地址,陣列地址,陣列長度)  
-<code>int arr_rtotal(int* arr1, int* arr2 ,int len);</code>
+>// 右移的成績總和(陣列地址,陣列地址,陣列長度,是否列印)  
+<code>int arr_rtotal(int* arr1, int* arr2 ,int len);  </code>
+
+0.  
+>// 右移的成績總和[預設不列印](陣列地址,陣列地址,陣列長度)  
+<code>int arr_rtotal(int* arr1, int* arr2 , int len)  </code>
