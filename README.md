@@ -10,5 +10,4 @@
   
   
 ---
-<div>　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
-> By:Charlotte.HoinG <code>未来の自分になっておく</code><div>
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<font color="blue">By:Charlotte.HoinG <code>未来の自分になっておく</code></font>
