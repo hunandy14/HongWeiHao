@@ -2,7 +2,7 @@
 Name : 重載 operator+ 與 += 函式
 Date : 2017/02/22
 By   : CharlotteHonG
-Final: 2017/02/22
+Final: 2017/03/05
 *****************************************************************/
 #include <iostream>
 #include <vector>
@@ -11,10 +11,19 @@ using namespace std;
 class Arr{
 public:
     Arr(size_t len=3, int value=1): num(len) {
-        cout << "create" << endl;
+        // cout << "Constructor" << endl;
         for(auto&& i : num)
             i=value;
     }
+    ~Arr(){
+        // cout << "Destructor" << endl;
+    }
+    void pri(){
+        for(auto&& i : num) {
+            cout << i << ", ";
+        }cout << endl;
+    }
+public:
     Arr & operator+=(Arr const &rhs){
         for(unsigned i = 0; i < num.size(); ++i)
             this->num[i] += rhs.num[i];
@@ -25,11 +34,7 @@ public:
             this->num[i] += value;
         return *this;
     }
-    void pri(){
-        for(auto&& i : num) {
-            cout << i << ", ";
-        }cout << endl;
-    }
+private:
     vector<int> num;
 };
 
