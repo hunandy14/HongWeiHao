@@ -36,14 +36,14 @@ int main(int argc, char const *argv[]){
     (*a).fun();
     (*b).fun();
 
-    // 無法存取
+    // 無法存取 (找不到該成員)
     // cout << "(*b).i=" << (*b).i << endl; // Error
     
     // 安全向下轉型
-    cout << "(*b).i=" << (*dynamic_cast<B*>(b)).i << endl;
+    cout << "(*b).i = " << dynamic_cast<B &>(*b).i << endl;
 
     // 非法的向下轉型
-    // cout << "(*a).i=" << (*dynamic_cast<B*>(a)).i << endl;
+    cout << "(A->B). = " << static_cast<B &>(*a).i << endl;
 
     return 0;
 }
