@@ -1,5 +1,5 @@
 /*****************************************************************
-Name : 
+Name : operator=() 進階重載 具備多重語意
 Date : 2017/03/21
 By   : CharlotteHonG
 Final: 2017/03/21
@@ -18,29 +18,29 @@ public:
         iota(img.begin(), img.end(), 1);
     }
 public: // 運算子
-// 重載下標符號
-int & operator[](size_t idx){
-    return const_cast<int&>(static_cast<const Raw&>(*this)[idx]);
-}
-const int & operator[](size_t idx) const{
-    return img[idx];
-}
-int & at2d(size_t y, size_t x){
-    return const_cast<int&>(
-        static_cast<const Raw&>(*this).at2d(y, x));
-}
-const int & at2d(size_t y, size_t x) const{
-    return (*this)[y*col+x];
-}
+    // 重載下標符號
+    int & operator[](size_t idx){
+        return const_cast<int&>(static_cast<const Raw&>(*this)[idx]);
+    }
+    const int & operator[](size_t idx) const{
+        return img[idx];
+    }
+    int & at2d(size_t y, size_t x){
+        return const_cast<int&>(
+            static_cast<const Raw&>(*this).at2d(y, x));
+    }
+    const int & at2d(size_t y, size_t x) const{
+        return (*this)[y*col+x];
+    }
 public: // 基礎函式
-void info(){
-    for(unsigned j = 0; j < img.size()/col; ++j) {
-        for(unsigned i = 0; i < col; ++i) {
-            cout << setw(3) << img[j*col+i];
+    void info(){
+        for(unsigned j = 0; j < img.size()/col; ++j) {
+            for(unsigned i = 0; i < col; ++i) {
+                cout << setw(3) << img[j*col+i];
+            }cout << endl;
         }cout << endl;
-    }cout << endl;
-}
-void get_block(size_t h, size_t w);
+    }
+    void get_block(size_t h, size_t w);
 private:// 資料成員
     size_t col;
     vector<int> img;
