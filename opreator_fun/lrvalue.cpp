@@ -10,11 +10,11 @@ using namespace std;
 void fun(int & i){
     cout << "l only" << endl;
 }
-void fun(int const && i){
+void fun(int && i){
     cout << "r only" << endl;
 }
 
-void fun2(int const & i){
+void fun(int const & i){
     // 如果有其他限定左右直的函式則他們優先
     cout << "l or r" << endl;
 }
@@ -30,9 +30,9 @@ int main(int argc, char const *argv[]){
     fun(move(i));
     fun(val());
     // fun2
-    fun2(i);
-    fun2(move(i));
-    fun2(val());
+    // fun2(i);
+    // fun2(move(i));
+    // fun2(val());
 
     return 0;
 }
