@@ -15,16 +15,15 @@ template <typename T>
 class List{
 public:
     // 建構子
-    List(initializer_list<T> n):
-        len(n.size()), list(new T[len])
-    {
+    List(initializer_list<T> n): len(n.size()), list(new T[len]){
         std::copy(n.begin(), n.begin() + n.size(), this->list);
     }
     // 複製建構子
     List(List const & rhs): len(rhs.len), list(new T[rhs.len]){
         std::copy(rhs.list, rhs.list + len, this->list);
     }
-    List(List && rhs): len(rhs.len), list(new T[rhs.len]){
+    // 移動建構子
+    List(List && rhs): len(0), list(nullptr){
         (*this) = std::move(rhs);
     }
     // 解構子
@@ -43,12 +42,12 @@ public:
         return (*this);
     }
 public:
-    // 重載賦值符號
+    // 複製函式
     List & operator=(List const & rhs){
         cout << "copy" << endl;
         // 相同則離開
         if(this != &rhs){
-            // 清除原始資源
+            // 清除本地資源
             this->~List();
             // 重建資源
             this->list = new T[len];
@@ -58,11 +57,12 @@ public:
         }
         return (*this);
     }
+    // 移動函式
     List & operator=(List && rhs){
         cout << "Move" << endl;
         // 相同則離開
         if(this != &rhs){
-            // 清除原始資源
+            // 清除本地資源
             this->~List();
             // 淺度拷貝
             this->len = rhs.len;
