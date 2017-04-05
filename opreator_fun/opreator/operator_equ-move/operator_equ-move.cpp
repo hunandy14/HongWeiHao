@@ -9,6 +9,7 @@ Final: 2017/03/25
 #include <numeric>
 #include <vector>
 #include <initializer_list>
+#include <algorithm>
 using namespace std;
 
 template <typename T>
@@ -16,11 +17,11 @@ class List{
 public:
     // 建構子
     List(initializer_list<T> n): len(n.size()), list(new T[len]){
-        std::copy(n.begin(), n.begin() + n.size(), this->list);
+        std::copy(n.begin(), n.end(), this->list);
     }
     // 複製建構子
     List(List const & rhs): len(rhs.len), list(new T[rhs.len]){
-        std::copy(rhs.list, rhs.list + len, this->list);
+        std::copy_n(rhs.list, len, this->list);
     }
     // 移動建構子
     List(List && rhs): len(0), list(nullptr){
@@ -53,7 +54,7 @@ public:
             this->list = new T[len];
             this->len = rhs.len;
             // 深度拷貝
-            std::copy(rhs.list, rhs.list + len, this->list); 
+            std::copy_n(rhs.list, len, this->list); 
         }
         return (*this);
     }
