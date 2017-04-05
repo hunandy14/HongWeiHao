@@ -4,6 +4,7 @@ Date : 2017/03/21
 By   : CharlotteHonG
 Final: 2017/03/21
 *****************************************************************/
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -40,6 +41,7 @@ public: // 基礎函式
             }cout << endl;
         }cout << endl;
     }
+    // 預載區塊 (區塊大小)
     void get_block(size_t h, size_t w);
 private:// 資料成員
     size_t col;
@@ -49,6 +51,7 @@ private:
     vector<Block> blk_p;
 public:
     Block blk(size_t pos);
+    Block & atblk(size_t idx);
 };
 
 
@@ -69,40 +72,29 @@ public:
     }
     // 深層拷貝
     Block & operator=(Block const & rhs){
-        cout << "C &" << endl;
-        if (this == &rhs)
-            return (*this);
-        for (unsigned i = 0; i < p.size(); ++i)
-            *(p[i]) = *(rhs.p[i]);
-        return (*this);
+        if (this != &rhs){
+            for (unsigned i = 0; i < p.size(); ++i){
+                *(p[i]) = *(rhs.p[i]);
+            }
+        } return (*this);
     }
     // 淺層拷貝
     Block & copy(Block const & rhs){
-        if (this == &rhs){
-            return (*this);
-        } else {
+        if (this != &rhs){
             p = rhs.p;
         } return (*this);
     }
-    Block & copy(Block && rhs){
-        if (this == &rhs){
-            return (*this);
-        } else {
-            p = std::move(rhs.p);
-        } return (*this);
-    }
+public:
+    // 印出區塊
     void info(){
         for(auto&& i : p) {
             cout << setw(3) << *i ;
-        }cout << endl;
+        } cout << endl;
     }
 public:
     vector<int*> p;
 };
-auto Raw::blk(size_t pos)-> Block{
-    return Block((*this), pos);
-}
-
+// 預載區塊 (區塊大小)
 void Raw::get_block(size_t h=2, size_t w=2){
     size_t len = (img.size()/col/h) * (col/w);
     // cout << "len=" << len << endl;
@@ -113,22 +105,32 @@ void Raw::get_block(size_t h=2, size_t w=2){
         // this->blk_p[i].info();
     }
 }
-
-/*==============================================================*/
+// 創建區塊物件
+auto Raw::blk(size_t pos) ->Block{
+    return Block((*this), pos);
+}
+auto Raw::atblk(size_t idx) ->Block&{
+    if(blk_p.size()==0) {
+        get_block();
+    }
+    return blk_p[idx];
+}
+//================================================================
 int main(int argc, char const *argv[]){
     Raw a(4, 4);
-    a.info();
+    // a.info();
     // 一般等號賦值
-    a[0] = -1;
-    a.at2d(0, 1) = -1;
-    a.info();
+    // a[0] = -1;
+    // a.at2d(0, 1) = -1;
+    // a.info();
     // 區塊等號賦值
     a.blk(2) = a.blk(3);
+    a.atblk(1) = a.atblk(0);
     a.info();
     // 不影響原本的等號
     Raw b(4, 4);
     a=b;
-    a.info();
+    // a.info();
     return 0;
 }
-/*==============================================================*/
+//================================================================
