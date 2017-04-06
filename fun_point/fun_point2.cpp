@@ -19,7 +19,7 @@ int sub(int a, int b){
 // using p = int (*)(int, int);
 
 // 搭配 decltype
-// typedef decltype(add) p;
+// typedef decltype(add) *p;
 using p = decltype(add);
 
 
