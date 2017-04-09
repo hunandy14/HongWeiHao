@@ -1,8 +1,8 @@
 /*****************************************************************
 Name : operator 移動語意的實現
-Date : 2017/03/06
+Date : 2017/03/25
 By   : CharlotteHonG
-Final: 2017/03/25
+Final: 2017/04/07
 *****************************************************************/
 #include <iostream>
 #include <iomanip>
@@ -83,10 +83,10 @@ int main(int argc, char const *argv[]){
     List<int> a{3, 2, 1};
     List<int> b{1, 2, 3};
     a.pri();
-
+    // 移動函式
     a = move(b);
     a.pri();
-
+    // 移動建構函式
     List<int> c = std::move(a);
     c.pri();
     return 0;
