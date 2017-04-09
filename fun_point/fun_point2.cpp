@@ -24,7 +24,7 @@ using p = decltype(add);
 
 
 // 使用 p 宣告
-int fun(int a, int b, auto fun_point){
+int fun(int a, int b, p fun_point){
     return (*fun_point)(a, b);
 }
 // 直接使用
