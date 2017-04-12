@@ -42,9 +42,9 @@ void fun(Opcast a){
 /*==============================================================*/
 int main(int argc, char const *argv[]){
     Opcast a(1);
-    // 轉出的隱式轉換
-    cout << a << endl;
     // 轉入的隱式轉換
+    cout << a << endl;
+    // 轉出的隱式轉換
     fun(10);
     return 0;
 }
