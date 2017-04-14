@@ -1,3 +1,7 @@
+#### 不定引數要怎麼區分
+List a(len);
+List b{len};
+
 #### ::怎麼取值的
 ```cpp
 tuple_size<decltype(make_tuple(args...))>::value
