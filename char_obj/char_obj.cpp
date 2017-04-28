@@ -50,6 +50,16 @@ public:
         delete [] temp;
         return (*this);
     }
+    Str& operator+=(char rhs){
+        char* temp = s;
+        size_t len = strlen(temp)+1;
+        s = new char[len+1]{};
+        strcat(s, temp);
+        strcat(s, &rhs);
+        // Ñh≥˝æè¥Ê
+        delete [] temp;
+        return (*this);
+    }
     char & operator[](size_t idx){
         return const_cast<char&>(static_cast<const Str&>(*this)[idx]);
     }
@@ -60,6 +70,13 @@ public:
     size_t size(){
         return strlen(s);
     }
+    Str & resize(size_t len){
+        char* temp = s;
+        s = new char[len+1]{};
+        size_t len2 = std::min(len, strlen(temp));
+        strncat(s, temp, len2);
+        return (*this);
+    }
     void pri(){
         cout << "pri s = " << s << endl;
     }
@@ -69,6 +86,10 @@ public:
 
 Str operator+(Str const & lhs, Str const & rhs){
     return Str(lhs) += rhs;
+}
+ostream& operator<< (ostream& s, const Str & rhs){
+    s << rhs.s;
+    return s;
 }
 //================================================================
 int main(int argc, char const *argv[]){
@@ -83,8 +104,13 @@ int main(int argc, char const *argv[]){
         c[i] = (i+65);
     } c += "\n\0";
     cout << endl;
+    cout << c << endl;
 
-    c.pri(); // print modified c
+    c.resize(3);
+    cout << c << endl;
+    c.resize(4);
+    c += 'D';
+    cout << c << endl;
     return 0;
 }
 //================================================================
