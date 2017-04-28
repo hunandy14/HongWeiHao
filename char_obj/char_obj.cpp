@@ -32,10 +32,20 @@ public:
     Str& operator+=(Str const & rhs){
         char* temp = s;
         size_t len = strlen(rhs.s)+strlen(temp);
-        s = new char[len+100]{};
+        s = new char[len+1]{};
         strcat(s, temp);
         // 來源是否相同
         this==&rhs? strcat(s, temp): strcat(s, (rhs.s));
+        // 刪除緩存
+        delete [] temp;
+        return (*this);
+    }
+    Str& operator+=(char const* rhs){
+        char* temp = s;
+        size_t len = strlen(rhs)+strlen(temp);
+        s = new char[len+1]{};
+        strcat(s, temp);
+        strcat(s, (rhs));
         // 刪除緩存
         delete [] temp;
         return (*this);
@@ -58,7 +68,7 @@ public:
 };
 
 Str operator+(Str const & lhs, Str const & rhs){
-    return Str(lhs)+=rhs;
+    return Str(lhs) += rhs;
 }
 //================================================================
 int main(int argc, char const *argv[]){
@@ -71,7 +81,8 @@ int main(int argc, char const *argv[]){
     for (unsigned i = 0; i < c.size(); ++i){
         cout << c[i];
         c[i] = (i+65);
-    }cout << endl;
+    } c += "\n\0";
+    cout << endl;
 
     c.pri(); // print modified c
     return 0;
