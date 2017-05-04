@@ -38,15 +38,15 @@ private:
     vector<int> num;
 };
 
-Arr operator+(Arr const &lhs, Arr const &rhs){
+Arr const operator+(Arr const &lhs, Arr const &rhs){
     cout << "lhs+rhs : ";
     return Arr(lhs) += rhs;
 }
-Arr operator+(int value, Arr const &rhs){
+Arr const operator+(int value, Arr const &rhs){
     cout << "rhs+    : ";
     return Arr(rhs) += value;
 }
-Arr operator+(Arr const &lhs, int value){
+Arr const operator+(Arr const &lhs, int value){
     cout << "lhs+    : ";
     return Arr(lhs) += value;
 }
