@@ -45,7 +45,7 @@ public:
         size_t len = strlen(rhs)+strlen(temp);
         s = new char[len+1]{};
         strcat(s, temp);
-        strcat(s, (rhs));
+        strcat(s, rhs);
         // „h³ı¾´æ
         delete [] temp;
         return (*this);
@@ -55,7 +55,7 @@ public:
         size_t len = strlen(temp)+1;
         s = new char[len+1]{};
         strcat(s, temp);
-        strcat(s, &rhs);
+        s[len-1] = rhs;
         // „h³ı¾´æ
         delete [] temp;
         return (*this);
@@ -66,6 +66,8 @@ public:
     const char & operator[](size_t idx) const{
         return s[idx];
     }
+    friend const Str operator+(Str const & lhs, Str const & rhs);
+    friend ostream& operator<< (ostream& s, const Str & rhs);
 public:
     size_t size(){
         return strlen(s);
@@ -77,14 +79,15 @@ public:
         strncat(s, temp, len2);
         return (*this);
     }
+
     void pri(){
         cout << "pri s = " << s << endl;
     }
-public:
+private:
     char* s;
 };
 
-Str operator+(Str const & lhs, Str const & rhs){
+const Str operator+(Str const & lhs, Str const & rhs){
     return Str(lhs) += rhs;
 }
 ostream& operator<< (ostream& s, const Str & rhs){
@@ -102,7 +105,7 @@ int main(int argc, char const *argv[]){
     for (unsigned i = 0; i < c.size(); ++i){
         cout << c[i];
         c[i] = (i+65);
-    } c += "\n\0";
+    } c += "YZ\n\0";
     cout << endl;
     cout << c << endl;
 
