@@ -111,6 +111,8 @@ int main(int argc, char const *argv[]){
     c.resize(4);
     c += 'D';
     cout << c << endl;
+    c += c;
+    cout << c << endl;
     return 0;
 }
 //================================================================
