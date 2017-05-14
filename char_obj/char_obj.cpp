@@ -66,10 +66,10 @@ public:
     const char & operator[](size_t idx) const{
         return s[idx];
     }
-    friend const Str operator+(Str const & lhs, Str const & rhs);
+    friend Str operator+(Str const & lhs, Str const & rhs);
     friend ostream& operator<< (ostream& s, const Str & rhs);
 public:
-    size_t size(){
+    const size_t size() const{
         return strlen(s);
     }
     Str & resize(size_t len){
@@ -79,8 +79,7 @@ public:
         strncat(s, temp, len2);
         return (*this);
     }
-
-    void pri(){
+    void pri() const{
         cout << "pri s = " << s << endl;
     }
 private:
@@ -102,7 +101,7 @@ int main(int argc, char const *argv[]){
     c = a+b; // c is "Hello World!Hello World!"
 
     // print c and modify c
-    for (unsigned i = 0; i < c.size(); ++i){
+    for(unsigned i = 0; i < c.size(); ++i){
         cout << c[i];
         c[i] = (i+65);
     } c += "YZ\n\0";
@@ -115,7 +114,11 @@ int main(int argc, char const *argv[]){
     c += 'D';
     cout << c << endl;
     c += c;
-    cout << c << endl;
+
+    const Str& d=c;
+    for(unsigned i = 0; i < d.size(); ++i){
+        cout << d[i];
+    } cout << endl;
     return 0;
 }
 //================================================================
