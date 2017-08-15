@@ -3,12 +3,37 @@ Name :
 Date : 2017/08/15
 By   : CharlotteHonG
 Final: 2017/08/15
+
+圖形資源檔 .rc 內容
+ID ICON "icon.ico"
+編譯圖形資源檔ˋ
+windres -i res.rc -o res.o
+編譯程式碼
+gcc -Wall -O2 -mwindows icon.o sou.c -o sou_release
 *****************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 
+void getFileName(char* buf, const char* fullName);
+void getBaseName(char* buf, const char* fullName);
+void creatResource(const char* fullName);
+//================================================================
+int main(int argc, char const *argv[]){
+    if(argc>1) {
+        for(int i = 1; i < argc; ++i) {
+            char* CMDName = (char*) malloc(strlen(argv[i]));
+            creatResource(argv[i]);
+            free(CMDName);
+        }
+    }
+    else if(argc==1) {
+        creatResource("CHG.ico");
+    }
+    // system("pause");
+    return 0;
+}
+//================================================================
 void getFileName(char* buf, const char* fullName){
     int idx;
     for(idx=strlen(fullName)-1; idx >=0; --idx)
@@ -44,19 +69,3 @@ void creatResource(const char* fullName){
     free(iconName);
     free(res_cmd);
 }
-//================================================================
-int main(int argc, char const *argv[]){
-    if(argc>1) {
-        for(int i = 1; i < argc; ++i) {
-            char* CMDName = (char*) malloc(strlen(argv[i]));
-            creatResource(argv[i]);
-            free(CMDName);
-        }
-    }
-    else if(argc==1) {
-        creatResource("CHG.ico");
-    }
-    // system("pause");
-    return 0;
-}
-//================================================================
