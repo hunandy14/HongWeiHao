@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]){
     else if(argc==1) {
         creatResource("CHG.ico");
     }
-    // system("pause");
+    system("pause");
     return 0;
 }
 //================================================================
@@ -48,24 +48,34 @@ void getBaseName(char* buf, const char* fullName){
         if(buf[idx]=='.') {break;}
     buf[idx]='\0';
 }
+void getPath(char* buf, const char* fullName){
+    int idx;
+    for(idx=strlen(fullName)-1; idx >=0; --idx)
+        if(fullName[idx]=='/' || fullName[idx]=='\\') {break;}
+    strcpy(buf, fullName);
+    buf[idx]='\0';  
+}
 void creatResource(const char* fullName){
+    char* img_Path = (char*) malloc(strlen(fullName) + 1);
+    getPath(img_Path, fullName);
+    // 創建 rc 檔案
     char* res_cmd = (char*) malloc(strlen(fullName) + 21 + 1);
     strcpy(res_cmd, "echo ID ICON ");
     strcat(res_cmd, fullName);
     strcat(res_cmd, " >res.rc");
     system(res_cmd);
     free(res_cmd);
-    
-    char* iconName = (char*) malloc(strlen(fullName) + 1);
-    getBaseName(iconName, fullName);
-    res_cmd = (char*) malloc(strlen(iconName) + 28 + 1);
+    // 創建資源檔
+    char* icon_BaseName = (char*) malloc(strlen(fullName) + 1);
+    getBaseName(icon_BaseName, fullName);
+    res_cmd = (char*) malloc(strlen(icon_BaseName) + 28 + 1);
     strcpy(res_cmd, "windres -i res.rc -o ");
-    strcat(res_cmd, iconName);
+    strcat(res_cmd, icon_BaseName);
     strcat(res_cmd, "_icon.o");
 
     system(res_cmd);
     system("del res.rc");
 
-    free(iconName);
+    free(icon_BaseName);
     free(res_cmd);
 }
