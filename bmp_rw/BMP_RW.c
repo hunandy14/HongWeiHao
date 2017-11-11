@@ -1,5 +1,5 @@
 /*****************************************************************
-Name : 
+Name :
 Date : 2017/11/10
 By   : CharlotteHonG
 Final: 2017/11/11
@@ -11,14 +11,14 @@ typedef unsigned char uch;
 
 // 檔案結構
 #pragma pack(2)
-struct BmpFileHeader{
+struct BmpFileHeader {
     uint16_t bfTybe;
     uint32_t bfSize;
     uint16_t bfReserved1;
     uint16_t bfReserved2;
     uint32_t bfOffBits;
 };
-struct BmpInfoHeader{
+struct BmpInfoHeader {
     uint32_t biSize;
     uint32_t biWidth;
     uint32_t biHeight;
@@ -34,7 +34,13 @@ struct BmpInfoHeader{
 #pragma pack()
 
 
-void bmpWrite(const char* name, const uch* raw_img, uint32_t width, uint32_t height, uint16_t bits){
+void bmpWrite(const char* name, const uch* raw_img,
+    uint32_t width, uint32_t height, uint16_t bits)
+{
+    if(!(name && raw_img)) {
+        perror("Error bmpWrite.");
+        return;
+    }
     // 檔案資訊
     struct BmpFileHeader file_h = {
         .bfTybe=0x4d42,
@@ -70,11 +76,11 @@ void bmpWrite(const char* name, const uch* raw_img, uint32_t width, uint32_t hei
     // 寫調色盤
     if(bits == 8) {
         for(unsigned i = 0; i < 256; ++i) {
-            uch c1 = i, c2 = 0;
-            fwrite((char*)&c1, sizeof(char), sizeof(uch), pFile);
-            fwrite((char*)&c1, sizeof(char), sizeof(uch), pFile);
-            fwrite((char*)&c1, sizeof(char), sizeof(uch), pFile);
-            fwrite((char*)&c2, sizeof(char), sizeof(uch), pFile);
+            uch c = i;
+            fwrite((char*)&c, sizeof(char), sizeof(uch), pFile);
+            fwrite((char*)&c, sizeof(char), sizeof(uch), pFile);
+            fwrite((char*)&c, sizeof(char), sizeof(uch), pFile);
+            fwrite("", sizeof(char), sizeof(uch), pFile);
         }
     }
     // 寫入圖片資訊
@@ -91,13 +97,18 @@ void bmpWrite(const char* name, const uch* raw_img, uint32_t width, uint32_t hei
         }
         // 對齊4byte
         for(size_t i = 0; i < alig; ++i) {
-            uch c = 0;
-            fwrite((char*)&c, sizeof(char), sizeof(uch), pFile);
+            fwrite("", sizeof(char), sizeof(uch), pFile);
         }
     }
     fclose(pFile);
 }
-void bmpRead(const char* name, uch** raw_img, uint32_t* width, uint32_t* height, uint16_t* bits){
+void bmpRead(const char* name, uch** raw_img,
+    uint32_t* width, uint32_t* height, uint16_t* bits)
+{
+    if(!(name && raw_img && width && height && bits)) {
+        perror("Error bmpRead.");
+        return;
+    }
     // 檔案資訊
     struct BmpFileHeader file_h;
     // 圖片資訊
@@ -128,19 +139,19 @@ void bmpRead(const char* name, uch** raw_img, uint32_t* width, uint32_t* height,
                 fread((char*)&(*raw_img)[j*(*width)+i], sizeof(char), sizeof(uch), pFile);
             }
         }
-        fseek (pFile , alig , SEEK_CUR);
+        fseek(pFile , alig , SEEK_CUR);
     }
     fclose(pFile);
 }
 
-struct Imgraw{
+struct Imgraw {
     uint32_t width, height;
     uint16_t bits;
     uch* data;
 };
 /*==============================================================*/
-int main(int argc, char const *argv[]){
-    struct Imgraw img;
+int main(int argc, char const *argv[]) {
+    struct Imgraw img = {0, 0, 0, NULL};
     bmpRead("kanna.bmp", &img.data, &img.width, &img.height, &img.bits);
     bmpWrite("output.bmp", img.data, img.width, img.height, img.bits);
     return 0;
