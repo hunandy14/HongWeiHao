@@ -104,11 +104,11 @@ void bmpWrite(const char* name, const uch* raw_img,
 void bmpRead(const char* name, uch** raw_img,
     uint32_t* width, uint32_t* height, uint16_t* bits)
 {
-    if(!(name && width && height && bits)) {
+    if(!(name && raw_img && width && height && bits)) {
         perror("Error bmpRead.");
         return;
     }
-    if(raw_img) {free(raw_img);}
+    if(*raw_img) {free(*raw_img);}
     // 檔案資訊
     struct BmpFileHeader file_h;
     // 圖片資訊
@@ -143,9 +143,23 @@ void bmpRead(const char* name, uch** raw_img,
     }
     fclose(pFile);
 }
+void converGray(uch* dst_img, const uch* src_img, size_t size) {
+    if(!dst_img && !src_img) {
+        perror("Error ConverGray.");
+        return;
+    }
+    for (size_t i = 0; i < size; i++) {
+        const uch R = src_img[i*3 + 0];
+        const uch G = src_img[i*3 + 1];
+        const uch B = src_img[i*3 + 2];
+        //dst[i] = (R*0.299 + G*0.587 + B*0.114);
+        dst_img[i] = (size_t)(R*19595 + G*38469 + B*7472) >> 16;
+    }
+}
 /*==============================================================*/
 void testBMP(){
     struct ImgData img;
+    img.data = NULL;
     bmpRead("img//kanna.bmp", &img.data, &img.width, &img.height, &img.bits);
     bmpWrite("img//output.bmp", img.data, img.width, img.height, img.bits);
 }
