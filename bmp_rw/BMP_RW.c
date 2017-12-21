@@ -1,4 +1,4 @@
-/*****************************************************************
+ï»¿/*****************************************************************
 Name :
 Date : 2017/11/10
 By   : CharlotteHonG
@@ -7,9 +7,9 @@ Final: 2017/11/11
 #include <stdlib.h>
 #include <stdio.h>
 #include <inttypes.h>
-typedef unsigned char uch;
+#include "BMP_RW.h"
 
-// ÀÉ®×µ²ºc
+// æª”æ¡ˆçµæ§‹
 #pragma pack(2)
 struct BmpFileHeader {
     uint16_t bfTybe;
@@ -33,7 +33,6 @@ struct BmpInfoHeader {
 };
 #pragma pack()
 
-
 void bmpWrite(const char* name, const uch* raw_img,
     uint32_t width, uint32_t height, uint16_t bits)
 {
@@ -41,7 +40,7 @@ void bmpWrite(const char* name, const uch* raw_img,
         perror("Error bmpWrite.");
         return;
     }
-    // ÀÉ®×¸ê°T
+    // æª”æ¡ˆè³‡è¨Š
     struct BmpFileHeader file_h = {
         .bfTybe=0x4d42,
         .bfReserved1=0,
@@ -50,7 +49,7 @@ void bmpWrite(const char* name, const uch* raw_img,
     };
     file_h.bfSize = file_h.bfOffBits + width*height * bits/8;
     if(bits==8) {file_h.bfSize += 1024, file_h.bfOffBits += 1024;}
-    // ¹Ï¤ù¸ê°T
+    // åœ–ç‰‡è³‡è¨Š
     struct BmpInfoHeader info_h = {
         .biSize=40,
         .biPlanes=1,
@@ -65,7 +64,7 @@ void bmpWrite(const char* name, const uch* raw_img,
     info_h.biBitCount = bits;
     info_h.biSizeImage = width*height * bits/8;
     if(bits == 8) {info_h.biClrUsed=256;}
-    // ¼g¤JÀÉÀY
+    // å¯«å…¥æª”é ­
     FILE *pFile = fopen(name,"wb+");
     if(!pFile) {
         perror("Error opening file.");
@@ -73,7 +72,7 @@ void bmpWrite(const char* name, const uch* raw_img,
     }
     fwrite((char*)&file_h, sizeof(char), sizeof(file_h), pFile);
     fwrite((char*)&info_h, sizeof(char), sizeof(info_h), pFile);
-    // ¼g½Õ¦â½L
+    // å¯«èª¿è‰²ç›¤
     if(bits == 8) {
         for(unsigned i = 0; i < 256; ++i) {
             uch c = i;
@@ -83,7 +82,7 @@ void bmpWrite(const char* name, const uch* raw_img,
             fwrite("", sizeof(char), sizeof(uch), pFile);
         }
     }
-    // ¼g¤J¹Ï¤ù¸ê°T
+    // å¯«å…¥åœ–ç‰‡è³‡è¨Š
     size_t alig = ((width*bits/8)*3) % 4;
     for(int j = height-1; j >= 0; --j) {
         for(unsigned i = 0; i < width; ++i) {
@@ -95,7 +94,7 @@ void bmpWrite(const char* name, const uch* raw_img,
                 fwrite((char*)&raw_img[j*width+i], sizeof(char), sizeof(uch), pFile);
             }
         }
-        // ¹ï»ô4byte
+        // å°é½Š4byte
         for(size_t i = 0; i < alig; ++i) {
             fwrite("", sizeof(char), sizeof(uch), pFile);
         }
@@ -105,15 +104,16 @@ void bmpWrite(const char* name, const uch* raw_img,
 void bmpRead(const char* name, uch** raw_img,
     uint32_t* width, uint32_t* height, uint16_t* bits)
 {
-    if(!(name && raw_img && width && height && bits)) {
+    if(!(name && width && height && bits)) {
         perror("Error bmpRead.");
         return;
     }
-    // ÀÉ®×¸ê°T
+    if(raw_img) {free(raw_img);}
+    // æª”æ¡ˆè³‡è¨Š
     struct BmpFileHeader file_h;
-    // ¹Ï¤ù¸ê°T
+    // åœ–ç‰‡è³‡è¨Š
     struct BmpInfoHeader info_h;
-    // Åª¨úÀÉÀY
+    // è®€å–æª”é ­
     FILE *pFile = fopen(name,"rb+");
     if(!pFile) {
         perror("Error opening file.");
@@ -121,13 +121,13 @@ void bmpRead(const char* name, uch** raw_img,
     }
     fread((char*)&file_h, sizeof(char), sizeof(file_h), pFile);
     fread((char*)&info_h, sizeof(char), sizeof(info_h), pFile);
-    // Åª¨úªø¼e
+    // è®€å–é•·å¯¬
     *width = info_h.biWidth;
     *height = info_h.biHeight;
     *bits = info_h.biBitCount;
     *raw_img = (uch*)calloc((info_h.biWidth)*(info_h.biHeight)*3, sizeof(uch));
-    // Åª¨úÅª¤ù¸ê°TÂàRAWÀÉ¸ê°T
-    fseek(pFile, file_h.bfOffBits, SEEK_SET);// ­×¥¿¸ê®Æ¶}©l³B
+    // è®€å–è®€ç‰‡è³‡è¨Šè½‰RAWæª”è³‡è¨Š
+    fseek(pFile, file_h.bfOffBits, SEEK_SET);// ä¿®æ­£è³‡æ–™é–‹å§‹è™•
     size_t alig = ((info_h.biWidth*info_h.biBitCount/8)*3) % 4;
     for(int j = *height-1; j >= 0; --j) {
         for(unsigned i = 0; i < *width; ++i) {
@@ -143,17 +143,10 @@ void bmpRead(const char* name, uch** raw_img,
     }
     fclose(pFile);
 }
-
-struct Imgraw {
-    uint32_t width, height;
-    uint16_t bits;
-    uch* data;
-};
 /*==============================================================*/
-int main(int argc, char const *argv[]) {
-    struct Imgraw img = {0, 0, 0, NULL};
-    bmpRead("kanna.bmp", &img.data, &img.width, &img.height, &img.bits);
-    bmpWrite("output.bmp", img.data, img.width, img.height, img.bits);
-    return 0;
+void testBMP(){
+    struct ImgData img;
+    bmpRead("img//kanna.bmp", &img.data, &img.width, &img.height, &img.bits);
+    bmpWrite("img//output.bmp", img.data, img.width, img.height, img.bits);
 }
 /*==============================================================*/
